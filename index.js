@@ -19,9 +19,20 @@ app.use(express.static('public'));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
+// Select all no DB // raw: Dado cru
+// informaçoes serão disparadas aoa acessar a pagina
 app.get('/', (req, res) => {
-  res.render("index");
-})
+  Pergunta.findAll({
+    raw: true, order: [
+      ['id', 'DESC'] // order by
+    ]
+  }).then(pergunta => {
+    res.render('index', {
+      perguntas: pergunta
+    });
+  });
+
+});
 
 app.get('/ask', (req, res) => {
   res.render('perguntar');
