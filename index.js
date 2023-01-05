@@ -34,8 +34,8 @@ app.get('/', (req, res) => {
 
 });
 
-app.get('/ask', (req, res) => {
-  res.render('perguntar');
+app.get('/asks', (req, res) => {
+  res.render('perguntas');
   const titulo = req.body.titulo;
   const descricao = req.body.descricao;
 
@@ -54,6 +54,21 @@ app.post('/salvarpergunta', (req, res) => {
     res.redirect('/'); // Redireciona o cliente para a página inicial
   });
 });
+
+// Rota de perguntas
+app.get('/ask/:id', (req, res) => {
+  const id = req.params.id;
+
+  Pergunta.findOne({
+    where: { id: id }
+  }).then(pergunta => {
+    if (pergunta) {
+      res.render('pergunta')
+    } else {
+      res.redirect('/');
+    };
+  })
+})
 
 app.listen(4000, error => {
   if (error) console.log("Ops, algo deu errado!")
