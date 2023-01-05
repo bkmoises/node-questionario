@@ -2,7 +2,7 @@ const bodyParser = require('body-parser');
 const express = require('express');
 const app = express();
 const connection = require('./database/database');
-const perguntaModel = require('./database/Pergunta');
+const Pergunta = require('./database/Pergunta');
 
 connection
   .authenticate()
@@ -32,7 +32,17 @@ app.get('/ask', (req, res) => {
 });
 
 app.post('/salvarpergunta', (req, res) => {
-})
+  const titulo = req.body.titulo;
+  const descricao = req.body.descricao
+
+  // Função responsavel por incluir um dado no BD
+  Pergunta.create({
+    titulo: titulo, // inclui no campo titulo a variavel titulo
+    descricao: descricao
+  }).then(() => {
+    res.redirect('/'); // Redireciona o cliente para a página inicial
+  });
+});
 
 app.listen(4000, error => {
   if (error) console.log("Ops, algo deu errado!")
