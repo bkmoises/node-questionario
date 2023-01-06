@@ -68,14 +68,19 @@ app.get('/ask/:id', (req, res) => {
     where: { id: id }
   }).then(pergunta => {
     if (pergunta) {
-      res.render('pergunta', {
-        pergunta: pergunta,
-      })
+      Resposta.findAll({
+        where: { perguntaId: pergunta.id }
+      }).then(respostas => {
+        res.render("pergunta", {
+          pergunta: pergunta,
+          resposta: respostas
+        });
+      });
     } else {
       res.redirect('/');
     };
-  })
-})
+  });
+});
 
 app.post('/answer', (req, res) => {
   const corpo = req.body.corpo;
