@@ -77,6 +77,17 @@ app.get('/ask/:id', (req, res) => {
   })
 })
 
+app.post('/answer', (req, res) => {
+  const corpo = req.body.corpo;
+  const perguntaId = req.body.pergunta;
+  Resposta.create({
+    corpo: corpo,
+    perguntaId: perguntaId
+  }).then(() => {
+    res.redirect(`/ask/${perguntaId}`);
+  });
+});
+
 app.listen(4000, error => {
   if (error) console.log("Ops, algo deu errado!")
   else console.log("Servidor Iniciado com Sucesso!");
