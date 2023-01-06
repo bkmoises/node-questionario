@@ -12,11 +12,11 @@ const Resposta = require('./database/Resposta');
 connection
   .authenticate()
   .then(() => {
-    console.log("Conexão estabelecida com sucesso!")
+    console.log("Conexão estabelecida com sucesso!");
   })
   .catch((error) => {
-    console.log(error)
-  })
+    console.log(error);
+  });
 
 app.set('view engine', 'ejs');
 app.use(express.static('public'));
@@ -49,7 +49,7 @@ app.get('/asks', (req, res) => {
 
 app.post('/salvarpergunta', (req, res) => {
   const titulo = req.body.titulo;
-  const descricao = req.body.descricao
+  const descricao = req.body.descricao;
 
   // Função responsavel por incluir um dado no BD
   Pergunta.create({
@@ -96,4 +96,4 @@ app.post('/answer', (req, res) => {
 app.listen(4000, error => {
   if (error) console.log("Ops, algo deu errado!")
   else console.log("Servidor Iniciado com Sucesso!");
-})
+});
