@@ -1,8 +1,13 @@
 const bodyParser = require('body-parser');
 const express = require('express');
 const app = express();
+
+// DB Connect
 const connection = require('./database/database');
+
+// Models
 const Pergunta = require('./database/Pergunta');
+const Resposta = require('./database/Resposta');
 
 connection
   .authenticate()
@@ -63,7 +68,9 @@ app.get('/ask/:id', (req, res) => {
     where: { id: id }
   }).then(pergunta => {
     if (pergunta) {
-      res.render('pergunta')
+      res.render('pergunta', {
+        pergunta: pergunta,
+      })
     } else {
       res.redirect('/');
     };
